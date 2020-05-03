@@ -35,6 +35,7 @@ public class DemoApplication {
 
             tx.begin(); //트랜잭션 시작
             printUser(em, member.getId());
+//            printUserAndTeam(em, member.getId());
             tx.commit();//트랜잭션 커밋
 
         } catch (Exception e) {
@@ -47,7 +48,7 @@ public class DemoApplication {
         emf.close(); //엔티티 매니저 팩토리 종료
     }
 
-    public static void printUserAndTean (EntityManager em , Long memberId) {
+    public static void printUserAndTeam (EntityManager em , Long memberId) {
 
         System.out.println("-----printUserAndTeam START------");
         Member findMember = em.find(Member.class , memberId);
