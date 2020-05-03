@@ -51,8 +51,10 @@ public class DemoApplication {
     public static void printUserAndTeam (EntityManager em , Long memberId) {
 
         System.out.println("-----printUserAndTeam START------");
-        Member findMember = em.find(Member.class , memberId);
+        Member findMember = em.getReference(Member.class , memberId);
         Team findTeam = findMember.getTeam();
+
+        System.out.println("객체의 이름 : " + findMember.getClass().getName());
         System.out.println("회원 이름 : " + findMember.getUsername());
         System.out.println("팀 이름 : " + findTeam.getName());
         System.out.println("-----printUserAndTeam END------");
@@ -60,9 +62,9 @@ public class DemoApplication {
 
     public static void printUser(EntityManager em , Long memberId) {
         System.out.println("-----printUser START------");
-        Member findMember = em.find(Member.class , memberId);
-        Team findTeam = findMember.getTeam();
+        Member findMember = em.getReference(Member.class , memberId);
 
+        System.out.println("객체의 이름 : " + findMember.getClass().getName());
         System.out.println("회원 이름 : " + findMember.getUsername());
         System.out.println("-----printUser END------");
     }
