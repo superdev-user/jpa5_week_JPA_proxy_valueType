@@ -18,36 +18,28 @@ public class DemoApplication {
             tx.begin(); //트랜잭션 시작
 
             Team team = Team.builder()
-                    .name("VOS")
-                    .build();
+                    .name("VOS").build();
 
             Member member = Member.builder()
                     .username("최윤진")
-                    .team(team)
+                    .team(team)  // 연관관계 추가
                     .build();
 
             Member member1 = Member.builder()
                     .username("원빈")
-                    .team(team)
+                    .team(team)  // 연관관계 추가
                     .build();
 
+            //
+            team.getMembers().add(member);
+            team.getMembers().add(member1);
+
+
             em.persist(team);
-            em.persist(member);
-            em.persist(member1);
 
             em.flush();
             em.clear();
 
-            System.out.println("===== Start LAZY loading ===== ");
-            Member findMember = em.find(Member.class , member.getId());
-
-            // Proxy 객체가 담긴 Team 변수
-            Team eagerFindTeam = findMember.getTeam();
-            System.out.println("eagerFindTeam is Proxy ?? " + eagerFindTeam.getClass());
-
-            // Proxy 객체이기 때문에 실제로 사용될때 Query를 날리게 됩니다.
-            eagerFindTeam.getName();
-            System.out.println("===== End LAZY loading =====");
 
 
             tx.commit();//트랜잭션 커밋
