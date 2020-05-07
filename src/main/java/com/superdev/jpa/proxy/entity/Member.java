@@ -18,7 +18,7 @@ public class Member {
 
     private String username;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.EAGER)
     private Team team;
 
     @Builder

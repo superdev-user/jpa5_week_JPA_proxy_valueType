@@ -38,12 +38,12 @@ public class DemoApplication {
             em.flush();
             em.clear();
 
+            System.out.println("===== Start eager loading ===== ");
+            Member findMember = em.find(Member.class , member.getId());
+            Team eagerFindTeam = findMember.getTeam();
+            System.out.println("===== End eager loading =====");
 
-            //printUser(em, member.getId());
-            //printUserAndTeam(em, member.getId());
-            //proxyEqualsClass(em);
-            //doesItExistInTheContextOfPersistenceExam1(em);
-            doesItExistInTheContextOfPersistenceExam2(em);
+
             tx.commit();//트랜잭션 커밋
         } catch (Exception e) {
             e.printStackTrace();
@@ -55,62 +55,4 @@ public class DemoApplication {
         emf.close(); //엔티티 매니저 팩토리 종료
     }
 
-    public static void printUserAndTeam (EntityManager em , Long memberId) {
-
-        System.out.println("-----printUserAndTeam START------");
-        Member findMember = em.getReference(Member.class , memberId);
-        Team findTeam = findMember.getTeam();
-
-        System.out.println("객체의 이름 : " + findMember.getClass().getName());
-        System.out.println("회원 이름 : " + findMember.getUsername());
-        System.out.println("팀 이름 : " + findTeam.getName());
-        System.out.println("-----printUserAndTeam END------");
-    }
-
-    public static void printUser(EntityManager em , Long memberId) {
-        System.out.println("-----printUser START------");
-        Member findMember = em.getReference(Member.class , memberId);
-
-        System.out.println("객체의 이름 : " + findMember.getClass().getName());
-        System.out.println("회원 이름 : " + findMember.getUsername());
-        System.out.println("-----printUser END------");
-    }
-
-    public static void proxyEqualsClass (EntityManager em ) {
-        Member member = em.find(Member.class , 2L);
-        Member memberProxy = em.getReference(Member.class , 3L);
-
-        System.out.println("-----proxyEqualsClass START------");
-        System.out.println("member find className :: " + member.getClass().getName());
-        System.out.println("memberProxy getReference className :: " + memberProxy.getClass().getName());
-        System.out.println("find == getReference :: " + (member == memberProxy));
-        System.out.println("find member is Member.class??  :: " + (member instanceof  Member));
-        System.out.println("getReference memberProxy is Member.class??  :: " + (memberProxy instanceof  Member));
-        System.out.println("-----proxyEqualsClass END------");
-    }
-
-    public static void doesItExistInTheContextOfPersistenceExam1(EntityManager em) {
-        Member member = em.find(Member.class , 2L);
-        Member memberProxy = em.getReference(Member.class , 2L);
-
-        System.out.println("-----doesItExistInTheContextOfPersistence START------");
-        System.out.println("member find className :: " + member.getClass().getName());                      //com.superdev.jpa.proxy.entity.Member
-        System.out.println("memberProxy getReference className :: " + memberProxy.getClass().getName());    //com.superdev.jpa.proxy.entity.Member
-        System.out.println(member == memberProxy);
-        System.out.println("-----doesItExistInTheContextOfPersistence START------");
-    }
-
-
-    public static void doesItExistInTheContextOfPersistenceExam2(EntityManager em) {
-        Member memberProxy = em.getReference(Member.class , 2L);
-        Member member = em.find(Member.class , 2L);
-        System.out.println("-----doesItExistInTheContextOfPersistence START------");
-        System.out.println("member find className :: " + member.getClass().getName());                      //com.superdev.jpa.proxy.entity.Member
-        System.out.println("memberProxy getReference className :: " + memberProxy.getClass().getName());    //com.superdev.jpa.proxy.entity.Member
-
-        // 두 객체는 비록 참조값은 다르지만 같다를 보장해줘야 한다.
-        // Proxy든 아니든 개발에 문제가 없도록 true를 보장해줘야 한다 .
-        System.out.println(member == memberProxy);
-        System.out.println("-----doesItExistInTheContextOfPersistence START------");
-    }
 }
