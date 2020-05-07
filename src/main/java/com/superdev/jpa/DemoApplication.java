@@ -38,10 +38,11 @@ public class DemoApplication {
             em.flush();
             em.clear();
 
-            System.out.println("===== Start eager loading ===== ");
+            System.out.println("===== Start LAZY loading ===== ");
             Member findMember = em.find(Member.class , member.getId());
             Team eagerFindTeam = findMember.getTeam();
-            System.out.println("===== End eager loading =====");
+            eagerFindTeam.getName();
+            System.out.println("===== End LAZY loading =====");
 
 
             tx.commit();//트랜잭션 커밋
