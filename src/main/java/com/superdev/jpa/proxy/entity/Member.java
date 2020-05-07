@@ -18,7 +18,8 @@ public class Member {
 
     private String username;
 
-    @ManyToOne(fetch = FetchType.EAGER)
+    @ManyToOne(fetch = FetchType.EAGER , optional = false)
+//    @JoinColumn(nullable = false)
     private Team team;
 
     @Builder
