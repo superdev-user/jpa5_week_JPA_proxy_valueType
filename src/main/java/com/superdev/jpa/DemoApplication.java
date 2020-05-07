@@ -40,7 +40,12 @@ public class DemoApplication {
 
             System.out.println("===== Start LAZY loading ===== ");
             Member findMember = em.find(Member.class , member.getId());
+
+            // Proxy 객체가 담긴 Team 변수
             Team eagerFindTeam = findMember.getTeam();
+            System.out.println("eagerFindTeam is Proxy ?? " + eagerFindTeam.getClass());
+
+            // Proxy 객체이기 때문에 실제로 사용될때 Query를 날리게 됩니다.
             eagerFindTeam.getName();
             System.out.println("===== End LAZY loading =====");
 
