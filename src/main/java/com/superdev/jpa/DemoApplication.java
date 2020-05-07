@@ -2,6 +2,7 @@ package com.superdev.jpa;
 
 import com.superdev.jpa.proxy.entity.Member;
 import com.superdev.jpa.proxy.entity.Team;
+import javafx.scene.Parent;
 
 import javax.persistence.*;
 import java.util.Arrays;
@@ -30,17 +31,16 @@ public class DemoApplication {
                     .team(team)  // 연관관계 추가
                     .build();
 
-            //
             team.getMembers().add(member);
             team.getMembers().add(member1);
-
 
             em.persist(team);
 
             em.flush();
             em.clear();
 
-
+            Team findParent = em.find(Team.class , team.getId());
+            em.remove(findParent);
 
             tx.commit();//트랜잭션 커밋
         } catch (Exception e) {

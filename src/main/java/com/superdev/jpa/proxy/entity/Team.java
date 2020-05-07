@@ -18,7 +18,7 @@ public class Team {
 
     private String name;
 
-    @OneToMany(mappedBy = "team" , cascade = CascadeType.PERSIST)
+    @OneToMany(mappedBy = "team" , cascade = {CascadeType.REMOVE, CascadeType.PERSIST})
     private List<Member> members = new ArrayList<Member>();
 
     @Builder
