@@ -5,6 +5,7 @@ import com.superdev.jpa.proxy.entity.Team;
 import javafx.scene.Parent;
 
 import javax.persistence.*;
+import java.util.ArrayList;
 import java.util.Arrays;
 
 public class DemoApplication {
@@ -50,6 +51,16 @@ public class DemoApplication {
              * */
             //findTeam.getMembers().remove(0);
             //findTeam.getMembers().clear();
+
+            // "A collection with cascade="all-delete-orphan" was no longer referenced by the owning entity instance
+            // 새로 참조하는 컬렉션은 hibernate가 관리하지 않아서 안된다! 라는 메세지 입니다.
+
+            // Exception Code
+            //findTeam.setMembers(new ArrayList<Member>(Arrays.asList(Member.builder().username("원빈").team(findTeam).build())));
+
+            // Success Code
+            //findTeam.getMembers().clear();
+            //findTeam.getMembers().addAll(new ArrayList<Member>(Arrays.asList(Member.builder().username("원빈").team(findTeam).build())));
 
             // 고아 객체 제거 기능은 영속성 컨텍스트를 flush할때 적용된다. ( flush 시점에 delete sql 이 실행된다 )
             em.flush();
