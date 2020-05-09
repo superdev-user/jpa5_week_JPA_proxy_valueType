@@ -7,6 +7,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import javax.persistence.*;
+import java.util.List;
 
 @Entity
 @Getter
@@ -18,11 +19,16 @@ public class Member {
     private String name;
     private int age;
 
-    @Embedded Address address;
+
+    @ElementCollection
+    @CollectionTable(name = "ADDRESS" ,
+        joinColumns = @JoinColumn(name = "MEMBER_ID")
+    )
+    List<Address> address;
 
 
     @Builder
-    public Member(String name, int age, Address address) {
+    public Member(String name, int age, List<Address> address) {
         this.name = name;
         this.age = age;
         this.address = address;

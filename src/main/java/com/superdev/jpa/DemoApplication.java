@@ -4,6 +4,9 @@ import com.superdev.jpa.proxy.entity.Address;
 import com.superdev.jpa.proxy.entity.Member;
 
 import javax.persistence.*;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 
 public class DemoApplication {
 
@@ -16,27 +19,18 @@ public class DemoApplication {
         try {
             tx.begin(); //트랜잭션 시작
 
-            Member member1 = Member.builder()
-                    .name("최윤진")
+            List<Address> addressList = new ArrayList<>(Arrays.asList(
+                    Address.builder().city("경기도").street("오산시").zipcode("08580").build(),
+                    Address.builder().city("서울시").street("관악구").zipcode("08580").build()
+            ));
+
+            Member member = Member.builder()
+                    .name("윤진")
                     .age(28)
-                    .address(Address.builder().city("서울").street("봉천동").zipcode("100-48").build())
+                    .address(addressList)
                     .build();
-            em.persist(member1);
-            em.flush();
 
-            Address address = member1.getAddress();
-
-            Member member2 = Member.builder()
-                    .name("최윤진")
-                    .age(28)
-                    .address(Address.builder()
-                            .city("경기도")
-                            .street(address.getStreet())
-                            .zipcode(address.getZipcode())
-                            .build())
-                    .build();
-            em.persist(member2);
-
+            em.persist(member);
             tx.commit();//트랜잭션 커밋
         } catch (Exception e) {
             e.printStackTrace();
