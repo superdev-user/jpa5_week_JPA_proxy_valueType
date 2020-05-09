@@ -24,11 +24,7 @@ public class DemoApplication {
             em.persist(member1);
             em.flush();
 
-            Address address = member1.getAddress();
-            System.out.println("====== set Address Start");
-            address.setCity("경기도");
-            em.flush();
-            System.out.println("====== set Address Start");
+            Address address = member1.getAddress().clone();
 
             Member member2 = Member.builder()
                     .name("최윤진")
@@ -36,6 +32,8 @@ public class DemoApplication {
                     .address(address)
                     .build();
             em.persist(member2);
+
+            member2.getAddress();
 
 
             tx.commit();//트랜잭션 커밋

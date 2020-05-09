@@ -5,13 +5,11 @@ import lombok.Builder;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-import javax.persistence.Column;
 import javax.persistence.Embeddable;
 
 @Embeddable
 @NoArgsConstructor
-@Setter
-public class Address {
+public class Address implements Cloneable{
 
     private String city;
     private String street;
@@ -22,5 +20,12 @@ public class Address {
         this.city = city;
         this.street = street;
         this.zipcode = zipcode;
+    }
+
+
+    @Override
+    public Address clone() throws CloneNotSupportedException{
+        Address clone =  (Address) super.clone();
+        return clone;
     }
 }
