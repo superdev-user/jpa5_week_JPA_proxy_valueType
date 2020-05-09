@@ -2,12 +2,14 @@ package com.superdev.jpa.proxy.entity;
 
 
 import lombok.Builder;
+import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import javax.persistence.Embeddable;
 
 @Embeddable
+@Getter
 @NoArgsConstructor
 public class Address implements Cloneable{
 
@@ -20,12 +22,5 @@ public class Address implements Cloneable{
         this.city = city;
         this.street = street;
         this.zipcode = zipcode;
-    }
-
-
-    @Override
-    public Address clone() throws CloneNotSupportedException{
-        Address clone =  (Address) super.clone();
-        return clone;
     }
 }

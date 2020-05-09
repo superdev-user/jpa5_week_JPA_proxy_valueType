@@ -24,17 +24,18 @@ public class DemoApplication {
             em.persist(member1);
             em.flush();
 
-            Address address = member1.getAddress().clone();
+            Address address = member1.getAddress();
 
             Member member2 = Member.builder()
                     .name("최윤진")
                     .age(28)
-                    .address(address)
+                    .address(Address.builder()
+                            .city("경기도")
+                            .street(address.getStreet())
+                            .zipcode(address.getZipcode())
+                            .build())
                     .build();
             em.persist(member2);
-
-            member2.getAddress();
-
 
             tx.commit();//트랜잭션 커밋
         } catch (Exception e) {
