@@ -16,19 +16,26 @@ public class DemoApplication {
         try {
             tx.begin(); //트랜잭션 시작
 
+            Member member1 = Member.builder()
+                    .name("최윤진")
+                    .age(28)
+                    .address(Address.builder().city("서울").street("봉천동").zipcode("100-48").build())
+                    .build();
+            em.persist(member1);
+            em.flush();
 
-            Address address = Address.builder().city("서울").street("봉천동").zipcode("100-48").build();
-            Address companyAddress = Address.builder().city("서울시").street("관악구").zipcode("1234-56").build();
+            Address address = member1.getAddress();
+            System.out.println("====== set Address Start");
+            address.setCity("경기도");
+            em.flush();
+            System.out.println("====== set Address Start");
 
-
-            Member member = Member.builder()
+            Member member2 = Member.builder()
                     .name("최윤진")
                     .age(28)
                     .address(address)
-                    .companyAddress(companyAddress)
                     .build();
-
-            em.persist(member);
+            em.persist(member2);
 
 
             tx.commit();//트랜잭션 커밋

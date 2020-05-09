@@ -3,12 +3,14 @@ package com.superdev.jpa.proxy.entity;
 
 import lombok.Builder;
 import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 import javax.persistence.Column;
 import javax.persistence.Embeddable;
 
 @Embeddable
 @NoArgsConstructor
+@Setter
 public class Address {
 
     private String city;

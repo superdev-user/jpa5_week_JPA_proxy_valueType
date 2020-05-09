@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import javax.persistence.*;
 
 @Entity
+@Getter
 public class Member {
 
     @Id @GeneratedValue(strategy = GenerationType.AUTO)
@@ -19,20 +20,11 @@ public class Member {
 
     @Embedded Address address;
 
-    @Embedded
-    @AttributeOverrides({
-            @AttributeOverride(name = "city" , column = @Column(name = "COMPANY_CITY")),
-            @AttributeOverride(name = "street" , column = @Column(name = "COMPANY_STREET")),
-            @AttributeOverride(name = "zipcode" , column = @Column(name = "COMPANY_ZIPCODE"))
-    })
-    Address companyAddress;
-
 
     @Builder
-    public Member(String name, int age, Address address,Address companyAddress) {
+    public Member(String name, int age, Address address) {
         this.name = name;
         this.age = age;
         this.address = address;
-        this.companyAddress = companyAddress;
     }
 }
